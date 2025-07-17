@@ -97,37 +97,82 @@ async def login_page(request: Request):
         }
 
         .user-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, rgba(110, 180, 230, 0.8), rgba(70, 140, 210, 0.9));
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg,
+            rgba(160, 230, 255, 0.9) 0%,
+            rgba(100, 200, 255, 0.7) 50%,
+            rgba(70, 150, 250, 0.8) 100%
+            );
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
-                        inset 0 0 10px rgba(255, 255, 255, 0.6);
+            box-shadow:
+                0 5px 25px rgba(100, 200, 255, 0.6),
+                inset 0 0 15px rgba(255, 255, 255, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.4),
+                inset 0 8px 15px rgba(0, 0, 0, 0.3); /* Тень вдавленности */
             position: relative;
             overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.6);
         }
 
         .user-icon::before {
             content: "";
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.9);
+            top: -10%;
+            left: -10%;
+            width: 50%;
+            height: 40%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 255, 255, 0) 80%
+            );
             border-radius: 50%;
+            z-index: 2;
+            transform: rotate(25deg);
+            pointer-events: none;
+            opacity: 0.7; /* Снижаем интенсивность */
         }
 
         .user-icon::after {
             content: "";
             position: absolute;
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.9);
+            inset: 0;
+            background: radial-gradient(
+                circle at 25% 25%,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .suiseiseki {
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
-            bottom: 15px;
+            position: relative;
+            z-index: 0;
+            filter:
+                brightness(1.05)
+                saturate(1.2)
+                drop-shadow(0 2px 3px rgba(0,0,0,0.2)); /* Тень под изображением */
+            transform: translateY(1px); /* Сдвиг вниз для эффекта вдавленности */
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Граница для отделения от стекла */
+        }
+
+        /* Эффект при наведении */
+        .user-icon:hover .suiseiseki {
+            transform: translateY(0px); /* Поднимаем при наведении */
+        }
+
+        .user-icon:hover::before {
+            transform: rotate(25deg) translate(3px, 3px);
         }
 
         h1 {
@@ -301,7 +346,7 @@ async def login_page(request: Request):
 
     <div class="login-container">
         <div class="shine"></div>
-        <div class="user-icon"></div>
+        <div class="user-icon"><img src="static/suiseiseki.jpg" alt="Перс" class = "suiseiseki"></div>
         <h1>Доступ ограничен</h1>
         <form action="/login" method="POST">
             <div class="input-container">
