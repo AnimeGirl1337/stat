@@ -7,7 +7,7 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/static/(.*\\.(png|jpg|jpeg|gif))",
       "dest": "api/index.py"
     }
   ]
